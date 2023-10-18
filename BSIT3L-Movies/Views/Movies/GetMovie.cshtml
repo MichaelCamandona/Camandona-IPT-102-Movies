@@ -1,17 +1,174 @@
-﻿@model BSIT3L_Movies.Models.MovieViewModel
-
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Movie</title>
+    <title>@Model.Name</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212; /* Dark background color */
+            color: #fff; /* Text color */
+            background-image: url('/Content/Images/bg.png');
+            background-size: contain;
+            background-repeat: repeat;
+    
+        }
+
+        h2 {
+            background-color: #e50914; /* Red background for the title */
+            color: #fff;
+            padding: 15px;
+            margin: 0;
+            text-align: center;
+        }
+
+        p {
+            margin: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #e50914; /* Red link color */
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+        .container {
+            max-width: 800px;
+            margin: 90px auto;
+            background-color: #1e1e1e; /* Dark container background */
+            padding: 20px;
+            border-radius: 10px; /* Rounded container */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            position: relative; /* Set container as a relative position for absolute positioning */
+        }
+
+        .movie-details {
+            flex: 1;
+            background-color: #1e1e1e; /* Dark content background */
+            padding: 20px;
+            border-radius: 10px; /* Rounded content */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .movie-title {
+            font-size: 28px; /* Larger title font size */
+            font-weight: bold;
+        }
+
+        .movie-info {
+            /* Larger info font size */
+        }
+
+        .trailer-link {
+            font-size: 20px; /* Larger link font size */
+            text-align: center;
+            margin-top: 20px; /* Increased margin for spacing */
+        }
+
+            .trailer-link a {
+                background-color: #e50914;
+                padding: 12px 24px; /* Larger button padding */
+                border-radius: 5px;
+                display: inline-block;
+                color: #fff;
+                text-decoration: none;
+                transition: background-color 0.3s ease; /* Smooth button hover effect */
+            }
+
+                .trailer-link a:hover {
+                    background-color: #ff0000; /* Darker red on hover */
+                }
+
+        /* Set the size of the image */
+        .movie-poster {
+            max-width: 320px;
+            height: 450px;
+            border-radius: 10px; /* Rounded image */
+            cursor: pointer;
+        }
+
+        /* Image overlay styles */
+        .image-container {
+            position: relative;
+            width: 320px; /* Match the image width */
+        }
+
+        .image {
+            display: block;
+            width: 320px;
+            height: 450px; /* Full-size image for better overlay effect */
+            transition: transform 0.5s ease; /* Added transition effect */
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6); /* Slightly darker overlay with transparency */
+            color: red;
+            width: 100%;
+            transition: 0.5s ease;
+            opacity: 0;
+            font-size: 24px; /* Larger text size */
+            padding: 20px;
+            text-align: center;
+            border-radius: 0 0 10px 10px; /* Round bottom corners */
+        }
+
+        .image-container:hover .overlay {
+            opacity: 1;
+        }
+
+        .image-container:hover .image {
+            transform: scale(1.05); /* Scale up on hover */
+        }
+
+        /* Styling for the "Back" button in the lower right corner */
+        .back-button {
+            font-size: 16px; /* Smaller font size for the button */
+            padding: 8px 16px; /* Smaller button padding */
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            .star-rating
+
+            display: inline-block;
+        }
+
+        .star {
+            font-size: 24px;
+            color: gold;
+            margin-right: 5px;
+        }
+        }
+    </style>
 </head>
 <body>
-    <h2>Movie Details</h2>
-    <p>Movie ID: @Model.Id</p>
-    <p>Movie Name: @Model.Name</p>
-    <p>Rating: @Model.Rating</p>
-    <p>Release Year: @Model.ReleaseYear</p>
-    <p>Genre: @Model.Genre</p>
+    <div class="trailer-link"><a href="javascript:history.back()" class="back-button">Back</a></div>
+    <h2>@Model.Name</h2>
+    <div class="container">
+
+        <div class="image-container" style="cursor: pointer;" onclick="window.location.href='@Model.YouTubeUrl'">
+            <img src="@Model.Image" alt="Image Poster" class="movie-poster image">
+            <div class="overlay" onclick="window.location.href='@Model.YouTubeUrl'" style="cursor: pointer;">Watch Now</div>
+        </div>
+        <div class="movie-details">
+            <p class="movie-title">Movie Details</p>
+            <p class="movie-info"><b>Rating</b>: @Model.Rating</p>
+            <p class="movie-info"><b>Release Year</b>: @Model.ReleaseYear</p>
+            <p class="movie-info"><b>Genre</b>: @Model.Genre</p>
+            <p class="movie-info"><b>Description</b>: @Model.Description</p>
+            @if (!string.IsNullOrWhiteSpace(Model.YouTubeUrl))
+            {
+                <div class="trailer-link"><a href="@Model.YouTubeUrl" target="_blank">Watch Trailer</a></div>
+               
+            }
+        </div>
+    </div>
 </body>
 </html>
